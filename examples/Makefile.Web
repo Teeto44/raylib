@@ -355,7 +355,7 @@ ifeq ($(TARGET_PLATFORM),$(filter $(TARGET_PLATFORM),PLATFORM_WEB PLATFORM_WEB_R
     ifeq ($(BUILD_WEB_WEBGL2),TRUE)
         LDFLAGS += -sMIN_WEBGL_VERSION=2 -sMAX_WEBGL_VERSION=2
     endif
-    
+
     # Add resources building if required
     ifeq ($(BUILD_WEB_RESOURCES),TRUE)
         LDFLAGS += --preload-file $(BUILD_WEB_RESOURCES_PATH)
@@ -559,7 +559,8 @@ SHAPES = \
     shapes/shapes_ring_drawing \
     shapes/shapes_rounded_rectangle_drawing \
     shapes/shapes_splines_drawing \
-    shapes/shapes_top_down_lights
+    shapes/shapes_top_down_lights \
+    shapes/shapes_dashed_line
 
 TEXTURES = \
     textures/textures_background_scrolling \
@@ -615,6 +616,7 @@ MODELS = \
     models/models_cubicmap_rendering \
     models/models_first_person_maze \
     models/models_geometric_shapes \
+    models/models_geometry_textures_cube \
     models/models_heightmap_rendering \
     models/models_loading \
     models/models_loading_gltf \
@@ -1083,6 +1085,10 @@ models/models_first_person_maze: models/models_first_person_maze.c
 
 models/models_geometric_shapes: models/models_geometric_shapes.c
 	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM)
+
+models/models_geometry_textures_cube: models/models_geometry_textures_cube.c
+	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM) \
+    --preload-file models/resources/cubicmap_atlas.png@resources/cubicmap_atlas.png
 
 models/models_heightmap_rendering: models/models_heightmap_rendering.c
 	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM) \
